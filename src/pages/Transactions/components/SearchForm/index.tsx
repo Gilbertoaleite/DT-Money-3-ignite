@@ -1,19 +1,41 @@
 import { MagnifyingGlass } from "phosphor-react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 import { SearchFormContainer } from "./styles";
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useContext } from "react";
+import { TransactionsContext } from "../../../../contexts/TransactionsContext";
 
-export function SearchForm(){
+const searchFormSchema = z.object({
+    query: z.string(),
+})
 
-    function Hello (evt: any){
-        
-        evt.preventDefault();
-        window.alert('Hello world!');
+type SearchFormInputs = z.infer<typeof searchFormSchema>;
+
+export function SearchForm() {
+    const {fetchTransactions} = useContext(TransactionsContext);
+
+    const { register,
+        handleSubmit,
+        formState: {isSubmitting}
+    } = useForm<SearchFormInputs>({
+        resolver: zodResolver(searchFormSchema),
+    });
+
+
+    async function handleSearchTransaction(data: SearchFormInputs) {
+        await fetchTransactions(data.query);
+
     }
 
     return (
-        <SearchFormContainer>
-            <input type="text" placeholder="Busque por transação"  />
-            <button onClick={Hello}>
-                <MagnifyingGlass/>Buscar</button>
+        <SearchFormContainer onSubmit={ handleSubmit(handleSearchTransaction) }>
+            <input type="text"
+                placeholder="Busque por transação"
+                { ...register("query") }
+            />
+            <button type="submit" disabled={isSubmitting}>
+                <MagnifyingGlass />Buscar</button>
         </SearchFormContainer>
     )
 }
