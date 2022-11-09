@@ -1,0 +1,28 @@
+{
+    "transaction": [
+        {
+            "id": "1",
+            "description": "Desenvolvimento de site",
+            "type": "income",
+            "category": "Venda",
+            "price": "14000",
+            "createdAt": "2022-11-07T22:53:50.621Z"
+        },
+        {
+            "id": "2",
+            "description": "Pizza",
+            "type": "outcome",
+            "category": "Alimentação",
+            "price": "140",
+            "createdAt": "2022-11-07T22:59:50.621Z"
+        },
+        {
+            "id": "3",
+            "description": "Mercado",
+            "type": "outcome",
+            "category": "Alimentação",
+            "price": "1040",
+            "createdAt": "2022-11-08T12:59:50.621Z"
+        }
+    ]
+}
