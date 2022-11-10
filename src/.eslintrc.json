@@ -1,0 +1,7 @@
+{
+    "extends": "@rocketseat/eslint-config/react"
+}
+// comando para rodar o eslint: npx eslint src --ext .ts,.tsx
+// para instalar  npm install eslint @rocketseat/eslint-config-react -D
+// para adicionar o fix no package.json adicionar o seguinte comando: 
+//"lint": "eslint src --ext .tsx,.ts", "lint:fix": "eslint src --ext .tsx,.ts --fix",
