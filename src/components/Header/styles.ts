@@ -15,11 +15,11 @@ export const HeaderContent = styled.div`
   justify-content: space-between;
   align-items: center;
 
-  span > a{
+  span > a {
     color: ${(props) => props.theme['gray-100']};
     text-decoration: none;
 
-    &:hover{
+    &:hover {
       color: ${(props) => props.theme['gray-300']};
       transition: color 0.2s;
     }

@@ -1,4 +1,5 @@
-import { createContext, ReactNode, useCallback, useEffect, useState } from 'react'
+import { ReactNode, useCallback, useEffect, useState } from 'react'
+import { createContext } from 'use-context-selector'
 import { api } from '../lib/axios'
 
 interface Transaction {
@@ -33,24 +34,22 @@ export const TransactionsContext = createContext<TransactionContextType>(
 export function TransactionsProvider({ children }: TransactionProviderProps) {
   const [transactions, setTransactions] = useState<Transaction[]>([])
 
-  const fetchTransactions = useCallback(
-    async (query?: string) => {
-      const response = await api.get('/transaction', {
-        params: {
-          _sort: 'createdAt',
-          _order: 'desc',
-          q: query,
-        }})
+  const fetchTransactions = useCallback(async (query?: string) => {
+    const response = await api.get('/transaction', {
+      params: {
+        _sort: 'createdAt',
+        _order: 'desc',
+        q: query,
+      },
+    })
     setTransactions(response.data)
     // console.log(data)
-  },
-  [],
-  )
+  }, [])
 
   const createTransaction = useCallback(
     async (data: CreateTransactionInput) => {
       const { description, price, category, type } = data
-  
+
       const response = await api.post('/transaction', {
         description,
         price,
@@ -59,25 +58,25 @@ export function TransactionsProvider({ children }: TransactionProviderProps) {
         createdAt: new Date(),
       })
 
-  // async function createTransaction(data: CreateTransactionInput) {
-  //   const { description, price, category, type } = data
+      // async function createTransaction(data: CreateTransactionInput) {
+      //   const { description, price, category, type } = data
 
-  //   const response = await api.post('/transaction', {
-  //     description,
-  //     price,
-  //     category,
-  //     type,
-  //     createdAt: new Date(),
-  //   })
+      //   const response = await api.post('/transaction', {
+      //     description,
+      //     price,
+      //     category,
+      //     type,
+      //     createdAt: new Date(),
+      //   })
 
-    setTransactions((state) => [response.data, ...state])
-  },
-  [],
-)
+      setTransactions((state) => [response.data, ...state])
+    },
+    [],
+  )
 
   useEffect(() => {
     fetchTransactions()
-  }, [fetchTransactions])
+  }, [])
 
   return (
     <TransactionsContext.Provider
