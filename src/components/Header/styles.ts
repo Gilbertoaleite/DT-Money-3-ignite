@@ -14,6 +14,16 @@ export const HeaderContent = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  span > a{
+    color: ${(props) => props.theme['gray-100']};
+    text-decoration: none;
+
+    &:hover{
+      color: ${(props) => props.theme['gray-300']};
+      transition: color 0.2s;
+    }
+  }
 `
 
 export const NewTransactionButton = styled.button`
