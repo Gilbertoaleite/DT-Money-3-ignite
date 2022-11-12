@@ -10,8 +10,9 @@ import {
 import { Controller, useForm } from 'react-hook-form'
 import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useContext } from 'react'
 import { TransactionsContext } from '../../contexts/TransactionsContext'
+// import { useContextSelector } from 'use-context-selector'
+import { useContext } from 'react'
 
 const newTransactionFormSchema = z.object({
   description: z.string(),
@@ -23,7 +24,9 @@ const newTransactionFormSchema = z.object({
 type NewTransactionFormInputs = z.infer<typeof newTransactionFormSchema>
 
 export function NewTransactionModal() {
-  const { createTransaction } = useContext(TransactionsContext)
+  const createTransaction = useContext(
+    TransactionsContext);
+
   const {
     control,
     register,
@@ -59,51 +62,51 @@ export function NewTransactionModal() {
         </CloseButton>
         <Dialog.Title>Nova transação</Dialog.Title>
 
-        <form onSubmit={handleSubmit(handleCreateNewTransaction)}>
+        <form onSubmit={ handleSubmit(handleCreateNewTransaction) }>
           <input
             type="text"
             placeholder="Descrição"
             required
-            {...register('description')}
+            { ...register('description') }
           />
 
           <input
             type="number"
             placeholder="Valor"
             required
-            {...register('price', { valueAsNumber: true })}
+            { ...register('price', { valueAsNumber: true }) }
           />
 
           <input
             type="text"
             placeholder="Categoria"
             required
-            {...register('category')}
+            { ...register('category') }
           />
 
           <Controller
-            control={control}
+            control={ control }
             name="type"
-            render={({ field }) => {
+            render={ ({ field }) => {
               console.log(field)
               return (
                 <TransactionType
-                  onValueChange={field.onChange}
-                  value={field.value}
+                  onValueChange={ field.onChange }
+                  value={ field.value }
                 >
                   <TransactionButton variant="income" value="income">
-                    <ArrowCircleUp size={24} />
+                    <ArrowCircleUp size={ 24 } />
                     Entrada
                   </TransactionButton>
                   <TransactionButton variant="outcome" value="outcome">
-                    <ArrowCircleDown size={24} />
+                    <ArrowCircleDown size={ 24 } />
                     Saída
                   </TransactionButton>
                 </TransactionType>
               )
-            }}
+            } }
           />
-          <button type="submit" disabled={isSubmitting}>
+          <button type="submit" disabled={ isSubmitting }>
             Cadastrar
           </button>
         </form>
